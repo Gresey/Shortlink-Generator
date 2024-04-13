@@ -17,9 +17,14 @@ export  async function handleUserLogin(req,res){
     if(!user){
         return res.render("login",{error:"Invalid email or password"});
     }
-    const sessionId=v4();
+    //in case of statefull authentication we create sessionID
+   /* const sessionId=v4();
     setUser(sessionId,user);
-    res.cookie("uid",sessionId);
+    res.cookie("uid",sessionId);*/
+
+    //in case of stateless auth we generate tokens
+    const token=setUser(user);
+    res.cookie("uid",token);
     return res.redirect("/");
 
 }
